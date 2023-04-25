@@ -11,34 +11,33 @@ class Handler implements URLHandler {
     {
         if (url.getPath().equals("/")) 
         {
-            return String.format("Hi!! \n use add and Search");
+            return String.format("Hi!!\nUse add and Search");
         } 
         else if (url.getPath().equals("/add")) 
         {
-            if (url.getPath().contains("s")) 
+            if (url.getQuery().contains("s")) 
             {
                 String[] parameters = url.getQuery().split("=");
                 if (parameters[0].equals("s"))
                  {
                     s.add(parameters[1]);
+                    return "Added.";
                 }
             }
-            return "404 Not Found!";
+            return "add?";
         }
         else if (url.getPath().equals("/search")) 
         {
-            if (url.getPath().contains("s")) 
+            String words = "Added words are listed below: \n";
+            if(s.size() != 0)
             {
-                String[] parameters = url.getQuery().split("=");
-                if (parameters[1].equals("app"))
-                 {
-                    for(String word : s)
-                    {
-                        System.out.println(word);
-                    }
+                for(String word : s)
+                {
+                    words += "\n" + word ;
                 }
+                return String.format(words);
             }
-            return "404 Not Found!";
+            return "Not added anything yet";
         }
          else 
         {
